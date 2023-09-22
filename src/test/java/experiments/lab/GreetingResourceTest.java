@@ -1,21 +1,38 @@
 package experiments.lab;
 
-import io.quarkus.test.junit.QuarkusTest;
+import static io.restassured.RestAssured.given;
+
+import java.util.Map;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
+import io.quarkus.test.junit.QuarkusTest;
+import io.restassured.response.Response;
 
 @QuarkusTest
 public class GreetingResourceTest {
 
+	private final String requestBody = """
+			 {"nameOfFruit": "tomato",
+			 "flavor": "salty",
+			 "someNullString": null}
+			""";
+	
     @Test
     public void testHelloEndpoint() {
-        given()
-          .when().get("/hello")
-          .then()
-             .statusCode(200)
-             .body(is("Hello RESTEasy"));
+    	Response response = given()
+    			.header("Content-type", "application/json")
+    			.and()
+    			.body(requestBody)
+    			.when().get("/hello")
+    			.then()
+    			.extract().response();
+    	
+    	Map<String, String> parameterViolations = response.jsonPath().getMap("parameterViolations[0]");
+    	
+    	Assertions.assertEquals(400, response.statusCode());
+    	Assertions.assertEquals("hello.dto.nameOfFruit", parameterViolations.get("path")); //Flavor must be null when nameOfFruit is tomato
+    	Assertions.assertEquals("flavor must be null when fruit is tomato", parameterViolations.get("message")); //Flavor must be null when nameOfFruit is tomato
     }
-
 }

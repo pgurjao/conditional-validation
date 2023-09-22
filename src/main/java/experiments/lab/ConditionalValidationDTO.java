@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @ConditionalValidate
-public class TestConditionalValidationDTO {
+public class ConditionalValidationDTO {
 	
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private boolean flavorMustBeNull;
