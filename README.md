@@ -5,7 +5,7 @@ How to reproduce error on `@NullWhen` annotation:
 1. Run project (using your IDE or using command `./gradlew quarkusDev`)
 2. Make request A (it will work)
 3. Make request B (it will throw exception, but it should have worked)
-4. Make request C (it will inform that 'someNullString' must be null, proving that @Null is working)
+4. Make request C (it will inform that 'someNullString' must be null, proving that `@Null` is working)
 5. Press `r` then `ENTER` on console to execute test. The test will fail with the same exception on request **B**. When the bug is resolved the test will pass.
 
 **Request A**
