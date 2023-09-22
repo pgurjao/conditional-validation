@@ -1,5 +1,48 @@
-# conditional-validation
+# conditional-validation debug
 
+How to reproduce error on `@NullWhen` annotation:
+
+1. Run project
+2. Make request A (it will work)
+3. Make request B (it will throw exception, but it should have worked)
+4. Make request C (it will inform that 'someNullString' must be null, proving that @Null is working)
+
+**Request A**
+```
+curl --location --request GET 'localhost:8080/hello' \
+--header 'Content-Type: application/json' \
+--data '{
+    "nameOfFruit": "banana",
+    "flavor": "sweet",
+    "someNullString": null
+}'
+```
+
+**Request B**
+```
+curl --location --request GET 'localhost:8080/hello' \
+--header 'Content-Type: application/json' \
+--data '{
+    "nameOfFruit": "tomato",
+    "flavor": "salty",
+    "someNullString": null
+}'
+```
+
+**Request C**
+```
+curl --location --request GET 'localhost:8080/hello' \
+--header 'Content-Type: application/json' \
+--data '{
+    "nameOfFruit": "banana",
+    "flavor": "sweet",
+    "someNullString": "thisIsNotNullString"
+}'
+```
+<br>
+<br>
+<br>
+  
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
