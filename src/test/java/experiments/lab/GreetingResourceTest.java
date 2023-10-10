@@ -32,7 +32,7 @@ public class GreetingResourceTest {
     	Map<String, String> parameterViolations = response.jsonPath().getMap("parameterViolations[0]");
     	
     	Assertions.assertEquals(400, response.statusCode());
-    	Assertions.assertEquals("hello.dto.nameOfFruit", parameterViolations.get("path")); //Flavor must be null when nameOfFruit is tomato
+    	Assertions.assertEquals("hello.dto.flavor", parameterViolations.get("path")); //Flavor must be null when nameOfFruit is tomato
     	Assertions.assertEquals("flavor must be null when fruit is tomato", parameterViolations.get("message")); //Flavor must be null when nameOfFruit is tomato
     }
 }
